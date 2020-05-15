@@ -42,14 +42,97 @@
 <!--Form in the Card -->
 
 <div class="card">
-  <div class="card-header">
-    Featured
+  <div class="card-header" style="text-align: center;">
+    Student Information
+    <button
+      type="button"
+      class="btn btn-primary"
+      data-toggle="modal"
+      data-target="#exampleModalLong"
+      style="
+        color: black;
+        font-weight: bold;
+        font-family: Times New Roman;
+        float: right;
+      "
+    >
+      Add new</button
+    >&nbsp;
   </div>
+
   <div class="card-body">
-    <h5 class="card-title">Special title treatment</h5>
+    <h5 class="card-title"></h5>
     <div class="card-text">
-      With supporting text below as a natural lead-in to additional content.
-      <div class="container">
+      <div class="row">
+        <div class="col-sm-1"></div>
+        <div class="col-sm-10">
+          <div class="table-responsive">
+            <ag-grid-angular
+              #agGrid
+              style="width: 800px; height: 300px;"
+              class="ag-theme-balham"
+              [rowData]="rowData | async"
+              [columnDefs]="columnDefs"
+              [modules]="modules"
+              rowSelection="single"
+              (gridReady)="onGridReady($event)"
+              (gridSizeChanged)="onGridSizeChanged($event)"
+            >
+            </ag-grid-angular>
+          </div>
+        </div>
+        <div class="col-sm-1"></div>
+      </div>
+    </div>
+    <br />
+  </div>
+  <div class="card-footer">
+    <div class="container" style="display: flex; align-content: center;">
+      <!-- Button trigger modal -->
+
+      <button
+        type="button"
+        class="btn btn-primary"
+        (click)="onRemoveSelected()"
+        style="color: black; font-weight: bold; font-family: Times New Roman;"
+      >
+        Remove Selected</button
+      >&nbsp;
+      <button
+        type="button"
+        class="btn btn-primary"
+        (click)="updateSelected()"
+        style="color: black; font-weight: bold; font-family: Times New Roman;"
+      >
+        Edit</button
+      >&nbsp;
+    </div>
+  </div>
+</div>
+
+<!-- Modal -->
+<div
+  class="modal fade"
+  id="exampleModalLong"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="exampleModalLongTitle"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
         <form ngForm>
           <div class="form-group">
             <label for="name">Name</label>
@@ -80,75 +163,11 @@
           >
             Submit
           </button>
-          <button
-            type="button"
-            class="btn btn-primary"
-            (click)="onRemoveSelected()"
-          >
-            Remove Selected
-          </button>
-          <button
-            type="button"
-            class="btn btn-primary"
-            (click)="updateSelected()"
-          >
-            Edit
-          </button>
+
           <button type="button" class="btn btn-primary" (click)="updRow()">
             Update
           </button>
         </form>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- Button trigger modal -->
-<!-- Button trigger modal -->
-<button
-  type="button"
-  class="btn btn-primary"
-  data-toggle="modal"
-  data-target="#exampleModalLong"
->
-  Launch demo modal
-</button>
-
-<!-- Modal -->
-<div
-  class="modal fade"
-  id="exampleModalLong"
-  tabindex="-1"
-  role="dialog"
-  aria-labelledby="exampleModalLongTitle"
-  aria-hidden="true"
->
-  <div class="modal-dialog modal-dialog-centered" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
-        <button
-          type="button"
-          class="close"
-          data-dismiss="modal"
-          aria-label="Close"
-        >
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <div class="container">
-          <ag-grid-angular
-            style="width: 300px; height: 500px;"
-            class="ag-theme-balham"
-            [rowData]="rowData"
-            [columnDefs]="columnDefs"
-            [modules]="modules"
-            rowSelection="multiple"
-            (gridReady)="onGridReady($event)"
-          >
-          </ag-grid-angular>
-        </div>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">
