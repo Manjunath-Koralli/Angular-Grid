@@ -1,13 +1,6 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-  <button
-    class="navbar-toggler"
-    type="button"
-    data-toggle="collapse"
-    data-target="#navbarTogglerDemo01"
-    aria-controls="navbarTogglerDemo01"
-    aria-expanded="false"
-    aria-label="Toggle navigation"
-  >
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo01" 
+    aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
   <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
@@ -26,38 +19,18 @@
       </li>
     </ul>
     <form class="form-inline my-2 my-lg-0">
-      <input
-        class="form-control mr-sm-2"
-        type="search"
-        placeholder="Search"
-        aria-label="Search"
-      />
-      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">
-        Search
-      </button>
+      <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search"/>
+      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
     </form>
   </div>
 </nav>
 
-<!--Form in the Card -->
-
 <div class="card">
   <div class="card-header" style="text-align: center;">
     Student Information
-    <button
-      type="button"
-      class="btn btn-primary"
-      data-toggle="modal"
-      data-target="#exampleModalLong"
-      style="
-        color: black;
-        font-weight: bold;
-        font-family: Times New Roman;
-        float: right;
-      "
-    >
-      Add new</button
-    >&nbsp;
+    <button type="button"class="btn btn-primary" data-toggle="modal" data-target="#newReg"
+      style="color: black;font-weight: bold;font-family: Times New Roman;float: right;">
+      Add new</button>&nbsp;
   </div>
 
   <div class="card-body">
@@ -76,8 +49,7 @@
               [modules]="modules"
               rowSelection="single"
               (gridReady)="onGridReady($event)"
-              (gridSizeChanged)="onGridSizeChanged($event)"
-            >
+              (gridSizeChanged)="onGridSizeChanged($event)">
             </ag-grid-angular>
           </div>
         </div>
@@ -89,46 +61,115 @@
   <div class="card-footer">
     <div class="container" style="display: flex; align-content: center;">
       <!-- Button trigger modal -->
-
-      <button
-        type="button"
-        class="btn btn-primary"
-        (click)="onRemoveSelected()"
-        style="color: black; font-weight: bold; font-family: Times New Roman;"
-      >
-        Remove Selected</button
-      >&nbsp;
-      <button
-        type="button"
-        class="btn btn-primary"
-        (click)="updateSelected()"
-        style="color: black; font-weight: bold; font-family: Times New Roman;"
-      >
-        Edit</button
-      >&nbsp;
+      <button type="button" class="btn btn-primary" (click)="onRemoveSelected()"
+        style="color: black; font-weight: bold; font-family: Times New Roman;">Delete
+      </button>&nbsp;
+      <button type="button" class="btn btn-primary" (click)="updateSelected()" (click)="showModal = true"
+        data-toggle="modal" data-target="#UpdateModal"
+        style="color: black; font-weight: bold; font-family: Times New Roman;">Edit
+      </button>&nbsp;
     </div>
   </div>
 </div>
 
-<!-- Modal -->
-<div
-  class="modal fade"
-  id="exampleModalLong"
-  tabindex="-1"
-  role="dialog"
-  aria-labelledby="exampleModalLongTitle"
-  aria-hidden="true"
->
+<!-- New Reg Modal -->
+<div class="modal fade"id="newReg" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle"
+  aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
-        <button
-          type="button"
-          class="close"
-          data-dismiss="modal"
-          aria-label="Close"
-        >
+        <h5 class="modal-title" id="exampleModalLongTitle">New Registration</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form class="text-center" style="color: #757575;" [formGroup]="registerForm" 
+            (ngSubmit)="createCustomer()">
+
+            <div class="form-row">
+              <div class="col">
+                <div class="md-form">
+                  <input class="form-control" type="text"  id="name" formControlName="cname" placeholder="Name" 
+                  [ngClass]="{ 'is-invalid': submitted &amp;&amp; registerForm.controls.cname.errors }" required/>
+                  <div *ngIf="submitted &amp;&amp; registerForm.controls.cname.errors" class="text-danger">
+                    <div *ngIf="registerForm.controls.cname.errors.required">Name is required</div>
+                    <div *ngIf="registerForm.controls.cname.errors.REW">Please enter alphabets</div>
+                  </div>
+                </div>
+              </div>
+              <div class="col">
+                <div class="md-form">
+                  <input class="form-control" type="number" id="age" formControlName="cage" placeholder="Age"
+                    [ngClass]="{ 'is-invalid': submitted &amp;&amp; registerForm.controls.cage.errors }" required/>
+                    <div *ngIf="submitted &amp;&amp; registerForm.controls.cage.errors" class="text-danger">
+                      <div *ngIf="registerForm.controls.cage.errors.required">Name is required</div>
+                      <div *ngIf="registerForm.controls.cage.errors.REW">Please enter alphabets</div>
+                    </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="col">
+                <div class="md-form">
+                  <input class="form-control" type="text"  id="dob" 
+                      formControlName="cdob" placeholder="Date of Birth" required/>
+                </div>
+              </div>
+              <div class="col">
+                <div class="md-form">
+                  <input class="form-control" type="number" id="contact" 
+                      formControlName="ccontact" placeholder="Contact" required/>
+
+                </div>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="col">
+                <div class="md-form">
+                  <input class="form-control" type="text"  id="email" 
+                      formControlName="cemail" placeholder="Email" required/>
+                </div>
+              </div>
+              <div class="col">
+                <div class="md-form">
+                  <input class="form-control" type="text" id="address" 
+                      formControlName="caddress" placeholder="Address" required/>
+
+
+                </div>
+              </div>
+            </div>
+        
+          
+            
+          
+         
+           
+          
+          <button type="button" class="btn btn-primary">Submit</button>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <!--<button type="button" class="btn btn-secondary" data-dismiss="modal">
+          Close
+        </button>
+        <button type="button" class="btn btn-primary">Save changes</button>-->
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Update info Modal -->
+<div class="modal fade" id="UpdateModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle"
+  aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Update Information</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
@@ -136,31 +177,15 @@
         <form ngForm>
           <div class="form-group">
             <label for="name">Name</label>
-            <input
-              type="text"
-              class="form-control"
-              id="name"
-              required
-              [(ngModel)]="model.name"
-              name="name"
-            />
+            <input type="text" class="form-control" id="name" name="name" [(ngModel)]="model.name"
+              required/>
           </div>
           <div class="form-group">
             <label for="age">Age</label>
-            <input
-              type="number"
-              class="form-control"
-              id="age"
-              required
-              [(ngModel)]="model.age"
-              name="age"
-            />
+            <input type="number" class="form-control" id="age" name="age" [(ngModel)]="model.age"
+              required/>
           </div>
-          <button
-            type="button"
-            class="btn btn-primary"
-            (click)="createCustomer()"
-          >
+          <button type="button" class="btn btn-primary" (click)="createCustomer()">
             Submit
           </button>
 
@@ -170,10 +195,10 @@
         </form>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">
+        <!--<button type="button" class="btn btn-secondary" data-dismiss="modal">
           Close
         </button>
-        <button type="button" class="btn btn-primary">Save changes</button>
+        <button type="button" class="btn btn-primary">Save changes</button>-->
       </div>
     </div>
   </div>

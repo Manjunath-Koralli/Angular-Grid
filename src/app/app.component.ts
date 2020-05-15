@@ -1,6 +1,7 @@
 import { Component } from "@angular/core";
 import { Customer } from "./customer";
 import { AllCommunityModules } from "@ag-grid-community/all-modules";
+import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 
 @Component({
   selector: "app-root",
@@ -9,34 +10,47 @@ import { AllCommunityModules } from "@ag-grid-community/all-modules";
 })
 export class AppComponent {
   title = "Angular-Grid";
-
+  //private formBuilder: FormBuilder;
   private gridApi;
   private gridColumnApi;
-  private columnDefs;
-  private rowData;
+  //private columnDefs;
+  //private rowData;
+  namepattern = "^[A-Za-z]+$";
   public id = 0;
   public tempId = 0;
   public btnVal = "Edit";
   custArray: Array<Customer> = new Array();
   getData: any[];
 
-  model = new Customer(" ", 0);
+
+  model = new Customer(" ", 0, " ", 0, " "," ");
   submitted = false;
 
-  constructor() {
-    this.columnDefs = [
-      {
-        headerName: "Name",
-        field: "name",
-        sortable: true,
-        filter: true,
-        checkboxSelection: true,
-      },
+  constructor(private formBuilder: FormBuilder) {}
+    columnDefs = [
+      { headerName: "Name",field: "name", sortable: true, filter: true, checkboxSelection: true},
       { headerName: "Age", field: "age", sortable: true, filter: true },
+      { headerName: "Date of Birth", field: "dob", sortable: true, filter: true },
+      { headerName: "Contact", field: "contact", sortable: true, filter: true },
+      { headerName: "Email", field: "email", sortable: true, filter: true },
+      { headerName: "Address", field: "address", sortable: true, filter: true },
     ];
 
-    this.rowData = [];
-  }
+    rowData = [];
+
+    registerForm = this.formBuilder.group({
+      cname: ['', [Validators.required,Validators.pattern(this.namepattern)]],
+      cage: ['', [Validators.required,Validators.pattern(/^[0-9]{3}$/)]],
+      cdob : ['',Validators.required],
+      ccontact: ['', [Validators.required,Validators.pattern(/^[0-9]{10}$/)] ],
+      cemail : ['',Validators.required],
+      caddress: ['', [Validators.required] ],
+      
+    });
+
+    get f() { 
+      return this.registerForm.controls; 
+    } 
 
   onSumbit() {
     this.submitted = true;
