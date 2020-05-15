@@ -3,6 +3,7 @@ import { Customer } from "./customer";
 import { AllCommunityModules } from "@ag-grid-community/all-modules";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 
+
 @Component({
   selector: "app-root",
   templateUrl: "./app.component.html",
@@ -39,12 +40,12 @@ export class AppComponent {
     rowData = [];
 
     registerForm = this.formBuilder.group({
-      cname: ['', [Validators.required,Validators.pattern(this.namepattern)]],
-      cage: ['', [Validators.required,Validators.pattern(/^[0-9]{3}$/)]],
+      cname: ['', [Validators.required,Validators.pattern(this.namepattern),Validators.maxLength(10)]],
+      cage: ['', [Validators.required,Validators.pattern(/^[0-9]{1,3}$/)]],
       cdob : ['',Validators.required],
-      ccontact: ['', [Validators.required,Validators.pattern(/^[0-9]{10}$/)] ],
+      ccontact: ['', [Validators.required,Validators.pattern(/^[0-9]{10}$/)]],
       cemail : ['',Validators.required],
-      caddress: ['', [Validators.required] ],
+      caddress: ['', Validators.required]
       
     });
 
@@ -52,9 +53,9 @@ export class AppComponent {
       return this.registerForm.controls; 
     } 
 
-  onSumbit() {
+  /*onSumbit() {
     this.submitted = true;
-  }
+  }*/
 
   onGridReady(params) {
     this.gridApi = params.api;
@@ -64,19 +65,46 @@ export class AppComponent {
   createCustomer() {
     console.log("Customer creation");
     //this.custArray.push(new Customer(this.model.name,this.model.age));
-    var newItem = this.createNewRowData();
-    var res = this.gridApi.updateRowData({ add: [newItem] });
-    this.printResult(res);
+    var check = this.createNewRowData();
+		if(check) {
+      //this.router.navigate(['ceo-main-page']);
+      alert("Succesfull");
+      console.log("Customer created");
+     
+		}else {
+      console.log("Customer not created");
+			return;
+    }
+    
   }
 
-  createNewRowData() {
-    var newData = {
-      id: this.id,
-      name: this.model.name,
-      age: this.model.age,
-    };
-    this.id++;
-    return newData;
+  createNewRowData():boolean {
+    if (this.registerForm.invalid) {
+      alert("INSIDE");
+      this.submitted = true;
+			//alert("Please enter");
+			return false;
+    }
+    else {
+      alert("ELSE IF");
+      this.submitted = false;
+      var newData = {
+        id: this.id,
+        name: this.f.cname.value,
+        age: this.f.cage.value,
+        dob: this.f.cdob.value,
+        contact: this.f.ccontact.value,
+        email: this.f.cemail.value,
+        address: this.f.caddress.value
+      };
+      this.id++;
+      
+      var res = this.gridApi.updateRowData({ add: [newData] });
+      this.printResult(res);
+      return true;
+      
+    }
+    
   }
 
   onRemoveSelected() {
