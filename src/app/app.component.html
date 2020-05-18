@@ -42,8 +42,8 @@
           <div class="table-responsive">
             <ag-grid-angular
               #agGrid
-              style="width: 800px; height: 300px;"
-              class="ag-theme-balham"
+              style="width: 1200px; height: 300px;"
+              class="ag-theme-alpine"
               [rowData]="rowData | async"
               [columnDefs]="columnDefs"
               [modules]="modules"
@@ -104,7 +104,7 @@
                 <div class="md-form">
                   <input class="form-control" type="number" id="age" formControlName="cage" placeholder="Age"
                     [ngClass]="{ 'is-invalid': submitted &amp;&amp; registerForm.controls.cage.errors }" 
-                    onKeyPress="if(this.value.length==10) return false;" required/>
+                     required/>
                     <div *ngIf="submitted &amp;&amp; registerForm.controls.cage.errors" class="text-danger">
                       <div *ngIf="registerForm.controls.cage.errors.required">Age is required</div>
                       <div *ngIf="registerForm.controls.cage.errors.pattern">Please enter numbers</div>
@@ -127,13 +127,12 @@
               <div class="col">
                 <div class="md-form">
                   <input class="form-control" type="number" id="contact" formControlName="ccontact" placeholder="Contact" 
-                  [ngClass]="{ 'is-invalid': submitted &amp;&amp; registerForm.controls.ccontact.errors }" required/>
+                  [ngClass]="{ 'is-invalid': submitted &amp;&amp; registerForm.controls.ccontact.errors }" 
+                  onKeyPress="if(this.value.length==10) return false;" required/>
                   <div *ngIf="submitted &amp;&amp; registerForm.controls.ccontact.errors" class="text-danger">
                     <div *ngIf="registerForm.controls.ccontact.errors.required">Contact is required</div>
                     <div *ngIf="registerForm.controls.ccontact.errors.pattern">Please enter numbers</div>
-                    <div *ngIf="registerForm.controls.ccontact.hasError('minlength')" >
-                      Contact should be 10 digits</div>
-                    <div *ngIf="registerForm.controls.ccontact.errors.maxLength">Contact should be 10 digits</div>
+                    
                   </div>
 
                 </div>
@@ -147,13 +146,14 @@
                   [ngClass]="{ 'is-invalid': submitted &amp;&amp; registerForm.controls.cemail.errors }" required/>
                     <div *ngIf="submitted &amp;&amp; registerForm.controls.cemail.errors" class="text-danger">
                       <div *ngIf="registerForm.controls.cemail.errors.required">Email is required</div>
+                      <div *ngIf="registerForm.controls.cemail.errors.pattern">Please enter proper format</div>
                     </div>
                 </div>
               </div>
               <div class="col">
                 <div class="md-form">
-                  <input class="form-control" type="text" id="address" formControlName="caddress" placeholder="Address" 
-                  [ngClass]="{ 'is-invalid': submitted &amp;&amp; registerForm.controls.caddress.errors }"  required/>
+                  <textarea class="form-control"  id="address" formControlName="caddress" placeholder="Address" 
+                  [ngClass]="{ 'is-invalid': submitted &amp;&amp; registerForm.controls.caddress.errors }" required></textarea>
                   <div *ngIf="submitted &amp;&amp; registerForm.controls.caddress.errors" class="text-danger">
                     <div *ngIf="registerForm.controls.caddress.errors.required">Address is required</div>
                   </div>

@@ -17,6 +17,7 @@ export class AppComponent {
   //private columnDefs;
   //private rowData;
   namepattern = "^[A-Za-z]+$";
+  emailpattern = "^[a-z]+[a-z0-9._]+@[a-z]+\.[a-z.]{2,5}$";
   public id = 0;
   public tempId = 0;
   public btnVal = "Edit";
@@ -40,11 +41,11 @@ export class AppComponent {
     rowData = [];
 
     registerForm = this.formBuilder.group({
-      cname: ['', [Validators.required,Validators.pattern(this.namepattern),Validators.maxLength(10)]],
+      cname: ['', [Validators.required,Validators.pattern(this.namepattern)]],
       cage: ['', [Validators.required,Validators.pattern(/^[0-9]{1,3}$/)]],
       cdob : ['',Validators.required],
       ccontact: ['', [Validators.required,Validators.pattern(/^[0-9]{10}$/)]],
-      cemail : ['',Validators.required],
+      cemail : ['', [Validators.required,Validators.pattern(/^[a-z]+[a-z0-9._]+@[a-z]+\.[a-z.]{2,5}$/)]],
       caddress: ['', Validators.required]
       
     });
